@@ -1,11 +1,12 @@
 import { IncomingWebhookSendArguments } from '@slack/webhook'
 import { JapannetbankNotification } from '@suin/japannetbank-email-parser'
 import { format, parseISO } from 'date-fns'
+import { utcToZonedTime } from 'date-fns-tz'
 import { ja } from 'date-fns/locale'
 import moji from 'moji'
 
-type NotificationFormatter = {
-  readonly [K in JapannetbankNotification['type']]?: (
+export type NotificationFormatter = {
+  readonly [K in JapannetbankNotification['type']]: (
     notification: Extract<JapannetbankNotification, { type: K }>,
   ) => IncomingWebhookSendArguments
 }
@@ -186,7 +187,11 @@ const newMessage = (
 }
 
 const datetime = (isoDate: string): string =>
-  format(parseISO(isoDate), 'yyyy年M月d日(EEEEE) hh:mm', { locale: ja })
+  format(
+    utcToZonedTime(parseISO(isoDate), 'Asia/Tokyo'),
+    'yyyy年M月d日(EEEEE) HH:mm',
+    { locale: ja },
+  )
 
 const date = (isoDate: string): string =>
   format(parseISO(isoDate), 'yyyy年M月d日(EEEEE)', { locale: ja })

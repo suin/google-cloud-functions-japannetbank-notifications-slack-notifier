@@ -4,8 +4,7 @@ import { notificationFormatter } from './notificationFormatter'
 const webhook: Pick<IncomingWebhook, 'send'> = process.env.WEBHOOK_URL
   ? new IncomingWebhook(process.env.WEBHOOK_URL)
   : {
-      send: async message => {
-        console.log(message)
+      send: async () => {
         return {} as IncomingWebhookResult
       },
     }
@@ -13,7 +12,7 @@ const webhook: Pick<IncomingWebhook, 'send'> = process.env.WEBHOOK_URL
 describe('notificationFormatter', () => {
   it('automaticTransferRegistrationCreated', async () => {
     await webhook.send(
-      notificationFormatter.automaticTransferRegistrationCreated!({
+      notificationFormatter.automaticTransferRegistrationCreated({
         type: 'automaticTransferRegistrationCreated',
         name: 'オフィス賃料',
         transferDate: '月末日',
@@ -22,7 +21,7 @@ describe('notificationFormatter', () => {
   })
   it('automaticTransferRegistrationDeleted', async () => {
     await webhook.send(
-      notificationFormatter.automaticTransferRegistrationDeleted!({
+      notificationFormatter.automaticTransferRegistrationDeleted({
         type: 'automaticTransferRegistrationDeleted',
         name: 'オフィス賃料',
         transferDate: '月末日',
@@ -31,7 +30,7 @@ describe('notificationFormatter', () => {
   })
   it('automaticTransferRegistrationUpdated', async () => {
     await webhook.send(
-      notificationFormatter.automaticTransferRegistrationUpdated!({
+      notificationFormatter.automaticTransferRegistrationUpdated({
         type: 'automaticTransferRegistrationUpdated',
         name: 'オフィス賃料',
         transferDate: '月末日',
@@ -40,7 +39,7 @@ describe('notificationFormatter', () => {
   })
   it('bulkTransferFeeCharged', async () => {
     await webhook.send(
-      notificationFormatter.bulkTransferFeeCharged!({
+      notificationFormatter.bulkTransferFeeCharged({
         type: 'bulkTransferFeeCharged',
         chargeDate: '2020-06-25',
       }),
@@ -48,7 +47,7 @@ describe('notificationFormatter', () => {
   })
   it('bulkTransferUpcoming', async () => {
     await webhook.send(
-      notificationFormatter.bulkTransferUpcoming!({
+      notificationFormatter.bulkTransferUpcoming({
         type: 'bulkTransferUpcoming',
         number: '200619-001',
         transferDate: '2020-06-25',
@@ -57,7 +56,7 @@ describe('notificationFormatter', () => {
   })
   it('payeasyPaid', async () => {
     await webhook.send(
-      notificationFormatter.payeasyPaid!({
+      notificationFormatter.payeasyPaid({
         type: 'payeasyPaid',
         receiptNumber: '2020071002866599',
         paidOn: '2020-07-10T08:52:12+09:00',
@@ -72,7 +71,7 @@ describe('notificationFormatter', () => {
   })
   it('timeDepositAutomaticallyRenewed', async () => {
     await webhook.send(
-      notificationFormatter.timeDepositAutomaticallyRenewed!({
+      notificationFormatter.timeDepositAutomaticallyRenewed({
         type: 'timeDepositAutomaticallyRenewed',
         number: '0143',
         renewalDate: '2020-07-01',
@@ -81,7 +80,7 @@ describe('notificationFormatter', () => {
   })
   it('timeDepositCreated', async () => {
     await webhook.send(
-      notificationFormatter.timeDepositCreated!({
+      notificationFormatter.timeDepositCreated({
         type: 'timeDepositCreated',
         number: '0143',
       }),
@@ -89,7 +88,7 @@ describe('notificationFormatter', () => {
   })
   it('timeDepositMatured', async () => {
     await webhook.send(
-      notificationFormatter.timeDepositMatured!({
+      notificationFormatter.timeDepositMatured({
         type: 'timeDepositMatured',
         number: '0143',
       }),
@@ -97,7 +96,7 @@ describe('notificationFormatter', () => {
   })
   it('timeDepositWillMature', async () => {
     await webhook.send(
-      notificationFormatter.timeDepositWillMature!({
+      notificationFormatter.timeDepositWillMature({
         type: 'timeDepositWillMature',
         number: '0143',
         maturityDate: '2020-07-01',
@@ -106,7 +105,7 @@ describe('notificationFormatter', () => {
   })
   it('transferDeposited', async () => {
     await webhook.send(
-      notificationFormatter.transferDeposited!({
+      notificationFormatter.transferDeposited({
         type: 'transferDeposited',
         depositedOn: '2000-01-02T03:04:05+09:00',
       }),
@@ -114,7 +113,7 @@ describe('notificationFormatter', () => {
   })
   it('transferDestinationRegistered', async () => {
     await webhook.send(
-      notificationFormatter.transferDestinationRegistered!({
+      notificationFormatter.transferDestinationRegistered({
         type: 'transferDestinationRegistered',
         recipient: 'カ）クラフトマンソフトウエ．．',
         bank: '三菱ＵＦＪ銀行',
@@ -124,7 +123,7 @@ describe('notificationFormatter', () => {
   })
   it('transferWithdrawalLimitChanged', async () => {
     await webhook.send(
-      notificationFormatter.transferWithdrawalLimitChanged!({
+      notificationFormatter.transferWithdrawalLimitChanged({
         type: 'transferWithdrawalLimitChanged',
         changedOn: '2000-01-02T03:04:05+09:00',
       }),
@@ -132,7 +131,7 @@ describe('notificationFormatter', () => {
   })
   it('transferWithdrawalScheduled', async () => {
     await webhook.send(
-      notificationFormatter.transferWithdrawalScheduled!({
+      notificationFormatter.transferWithdrawalScheduled({
         type: 'transferWithdrawalScheduled',
         number: '202007080077840',
         amount: 134383,
@@ -143,7 +142,7 @@ describe('notificationFormatter', () => {
   })
   it('transferWithdrawn', async () => {
     await webhook.send(
-      notificationFormatter.transferWithdrawn!({
+      notificationFormatter.transferWithdrawn({
         type: 'transferWithdrawn',
         withdrawnOn: '2000-01-02T03:04:05+09:00',
         number: '202007080077840',
@@ -154,7 +153,7 @@ describe('notificationFormatter', () => {
   })
   it('visaFrozen', async () => {
     await webhook.send(
-      notificationFormatter.visaFrozen!({
+      notificationFormatter.visaFrozen({
         type: 'visaFrozen',
         frozenOn: '2000-01-02T03:04:05+09:00',
       }),
@@ -162,7 +161,7 @@ describe('notificationFormatter', () => {
   })
   it('visaLimitChanged', async () => {
     await webhook.send(
-      notificationFormatter.visaLimitChanged!({
+      notificationFormatter.visaLimitChanged({
         type: 'visaLimitChanged',
         changedOn: '2000-01-02T03:04:05+09:00',
         newLimit: 1000000,
@@ -171,7 +170,7 @@ describe('notificationFormatter', () => {
   })
   it('visaRefunded', async () => {
     await webhook.send(
-      notificationFormatter.visaRefunded!({
+      notificationFormatter.visaRefunded({
         type: 'visaRefunded',
         refundedOn: '2000-01-02T03:04:05+09:00',
         shop: 'ＡＭＡＺＯＮ　ＣＯ　ＪＰ',
@@ -180,15 +179,29 @@ describe('notificationFormatter', () => {
       }),
     )
   })
-  it('visaWithdrawn', async () => {
-    await webhook.send(
-      notificationFormatter.visaWithdrawn!({
+  describe('visaWithdrawn', () => {
+    test('unit', () => {
+      const message = notificationFormatter.visaWithdrawn({
         type: 'visaWithdrawn',
-        withdrawnOn: '2000-01-02T03:04:05+09:00',
+        withdrawnOn: '2000-01-01T12:00:00+09:00',
         shop: 'ＡＭＡＺＯＮ　ＣＯ　ＪＰ',
         amount: 100000,
         number: '1A001001',
-      }),
-    )
+      })
+      const text = message.attachments?.[0]?.text
+      expect(text).toContain('100,000 支払いました。')
+      expect(text).toContain('2000年1月1日(土) 12:00')
+    })
+    test('integration', async () => {
+      await webhook.send(
+        notificationFormatter.visaWithdrawn({
+          type: 'visaWithdrawn',
+          withdrawnOn: '2000-01-02T03:04:05+09:00',
+          shop: 'ＡＭＡＺＯＮ　ＣＯ　ＪＰ',
+          amount: 100000,
+          number: '1A001001',
+        }),
+      )
+    })
   })
 })

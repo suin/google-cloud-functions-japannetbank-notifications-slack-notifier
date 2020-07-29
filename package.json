@@ -62,6 +62,7 @@
     "@suin/event-data": "^1.0.0",
     "@suin/japannetbank-email-parser": "^1.0.0",
     "date-fns": "^2.15.0",
+    "date-fns-tz": "^1.0.10",
     "moji": "^0.5.1"
   },
   "devDependencies": {
