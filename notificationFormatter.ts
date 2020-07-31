@@ -103,8 +103,8 @@ export const notificationFormatter: NotificationFormatter = {
   transferDeposited: ({ depositedOn }) =>
     newMessage(
       'warning',
-      `:振込: 誰かへの振込を行いました。<${loginUrl}|ログインして確認する>`,
-      ['振込日時', datetime(depositedOn)],
+      `:振込: 誰かから入金がありました。<${loginUrl}|ログインして確認する>`,
+      ['入金日時', datetime(depositedOn)],
     ),
   transferDestinationRegistered: ({ recipient, bank }) =>
     newMessage(

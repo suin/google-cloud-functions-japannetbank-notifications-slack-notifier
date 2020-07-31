@@ -103,13 +103,24 @@ describe('notificationFormatter', () => {
       }),
     )
   })
-  it('transferDeposited', async () => {
-    await webhook.send(
-      notificationFormatter.transferDeposited({
+  describe('transferDeposited', () => {
+    test('unit', () => {
+      const message = notificationFormatter.transferDeposited({
         type: 'transferDeposited',
         depositedOn: '2000-01-02T03:04:05+09:00',
-      }),
-    )
+      })
+      const text = message.attachments?.[0]?.text
+      expect(text).toContain('入金がありました。')
+      expect(text).toContain('*入金日時* 2000年1月2日(日) 03:04')
+    })
+    test('integration', async () => {
+      await webhook.send(
+        notificationFormatter.transferDeposited({
+          type: 'transferDeposited',
+          depositedOn: '2000-01-02T03:04:05+09:00',
+        }),
+      )
+    })
   })
   it('transferDestinationRegistered', async () => {
     await webhook.send(
